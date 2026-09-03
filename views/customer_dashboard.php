@@ -8,6 +8,58 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
+$success_msg = "";
+$error_msg = "";
+
+// Initialize session orders array if not already set
+if (!isset($_SESSION['orders'])) {
+    $_SESSION['orders'] = [];
+}
+
+// Handle Form POST Submission (Merging items into ONE order)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
+    $phone = trim($_POST['phone'] ?? '');
+    $address = trim($_POST['address'] ?? '');
+    $pickup_date = trim($_POST['pickup_date'] ?? '');
+    $time_slot = trim($_POST['time_slot'] ?? '');
+    $items_json = $_POST['items_json'] ?? '[]';
+    $items = json_decode($items_json, true);
+
+    if (empty($phone) || empty($address) || empty($pickup_date) || empty($time_slot)) {
+        $error_msg = "Please fill in all address, phone, and pickup schedule details.";
+    } elseif (empty($items) || count($items) === 0) {
+        $error_msg = "Please enter quantity for at least one clothes item.";
+    } else {
+        $order_code = "ORD-" . rand(1000, 9999);
+        $subtotal = 0;
+        foreach ($items as $it) {
+            $subtotal += ($it['price'] * $it['qty']);
+        }
+        $pickup_fee = $subtotal >= 30 ? 0.00 : 2.50;
+        $tax = $subtotal * 0.08;
+        $total_amount = $subtotal + $pickup_fee + $tax;
+
+        $new_order = [
+            'id' => $order_code,
+            'customer_name' => $username,
+            'phone' => $phone,
+            'address' => $address,
+            'pickup_date' => $pickup_date,
+            'time_slot' => $time_slot,
+            'items' => $items,
+            'subtotal' => $subtotal,
+            'pickup_fee' => $pickup_fee,
+            'tax' => $tax,
+            'total_amount' => $total_amount,
+            'status' => 'Pending', // Initial State upon placing order
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+
+        // Store new order at the top of orders list
+        array_unshift($_SESSION['orders'], $new_order);
+        $success_msg = "Order <strong>" . $order_code . "</strong> placed successfully! Current State: <span class='badge-status badge-pending'>Pending</span>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +84,7 @@ $username = $_SESSION['username'];
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="#dashboard" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-                <li><a href="#press-order"><i class="fa-solid fa-circle-plus"></i> Press Order</a></li>
-                <li><a href="#my-orders"><i class="fa-solid fa-box-archive"></i> My Orders</a></li>
+                <li><a href="customer_dashboard.php" class="active"><i class="fa-solid fa-circle-plus"></i> Press Order</a></li>
                 <li><a href="../logout.php" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
             </ul>
 
@@ -58,111 +108,20 @@ $username = $_SESSION['username'];
             <!-- Dashboard Content Container -->
             <div class="dashboard-content">
                 
-                <!-- Section 1: Press Order - Decorated Garments & Item Pricing -->
-                <section id="press-order" class="dashboard-section">
-                    <div class="section-title-box">
-                        <h2><i class="fa-solid fa-shirt"></i> Select Garments & Pricing</h2>
-                        <p>Choose your clothes and specify quantities for doorstep pickup.</p>
+                <?php if (!empty($success_msg)): ?>
+                    <div class="alert-box alert-success">
+                        <i class="fa-solid fa-circle-check"></i> <?php echo $success_msg; ?>
                     </div>
+                <?php endif; ?>
 
-                    <!-- Decorated Garments Grid -->
-                    <div class="items-grid">
-                        
-                        <!-- Item 1: Shirt -->
-                        <div class="item-card">
-                            <span class="item-badge-tag tag-popular">Popular</span>
-                            <div class="item-icon"><i class="fa-solid fa-shirt"></i></div>
-                            <h4 class="item-title">Shirt / T-Shirt</h4>
-                            <p class="item-service">Wash & Iron</p>
-                            <div class="item-footer">
-                                <span class="price-pill">$3.50 <small>/ pc</small></span>
-                                <div class="quantity-stepper">
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-minus"></i></button>
-                                    <span class="qty-val">0</span>
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 2: Pants -->
-                        <div class="item-card">
-                            <div class="item-icon"><i class="fa-solid fa-socks"></i></div>
-                            <h4 class="item-title">Trousers / Jeans</h4>
-                            <p class="item-service">Wash & Fold</p>
-                            <div class="item-footer">
-                                <span class="price-pill">$4.50 <small>/ pc</small></span>
-                                <div class="quantity-stepper">
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-minus"></i></button>
-                                    <span class="qty-val">0</span>
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 3: Dress -->
-                        <div class="item-card">
-                            <span class="item-badge-tag tag-delicate">Delicate</span>
-                            <div class="item-icon"><i class="fa-solid fa-person-dress"></i></div>
-                            <h4 class="item-title">Dress / Skirt</h4>
-                            <p class="item-service">Dry Cleaning</p>
-                            <div class="item-footer">
-                                <span class="price-pill">$7.00 <small>/ pc</small></span>
-                                <div class="quantity-stepper">
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-minus"></i></button>
-                                    <span class="qty-val">0</span>
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 4: Suit -->
-                        <div class="item-card">
-                            <div class="item-icon"><i class="fa-solid fa-user-tie"></i></div>
-                            <h4 class="item-title">Suit / Blazer</h4>
-                            <p class="item-service">Steam Clean</p>
-                            <div class="item-footer">
-                                <span class="price-pill">$12.00 <small>/ pc</small></span>
-                                <div class="quantity-stepper">
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-minus"></i></button>
-                                    <span class="qty-val">0</span>
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 5: Bed Sheet -->
-                        <div class="item-card">
-                            <div class="item-icon"><i class="fa-solid fa-bed"></i></div>
-                            <h4 class="item-title">Bed Sheet</h4>
-                            <p class="item-service">Deep Clean</p>
-                            <div class="item-footer">
-                                <span class="price-pill">$6.50 <small>/ set</small></span>
-                                <div class="quantity-stepper">
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-minus"></i></button>
-                                    <span class="qty-val">0</span>
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 6: Comforter -->
-                        <div class="item-card">
-                            <span class="item-badge-tag tag-express">Heavy</span>
-                            <div class="item-icon"><i class="fa-solid fa-box"></i></div>
-                            <h4 class="item-title">Heavy Comforter</h4>
-                            <p class="item-service">Heavy Wash</p>
-                            <div class="item-footer">
-                                <span class="price-pill">$14.00 <small>/ pc</small></span>
-                                <div class="quantity-stepper">
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-minus"></i></button>
-                                    <span class="qty-val">0</span>
-                                    <button type="button" class="step-btn"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
+                <?php if (!empty($error_msg)): ?>
+                    <div class="alert-box alert-error">
+                        <i class="fa-solid fa-triangle-exclamation"></i> <?php echo $error_msg; ?>
                     </div>
-                </section>
+                <?php endif; ?>
+
+                <!-- PRESS ORDER FORM COMPONENT -->
+                <?php include __DIR__ . "/includes/press_order_form.php"; ?>
 
             </div>
 
@@ -173,6 +132,72 @@ $username = $_SESSION['username'];
         </main>
 
     </div>
+
+    <!-- Form JavaScript for Live Calculation & Merging -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const itemRows = document.querySelectorAll('.form-item-row');
+        const itemsJsonInput = document.getElementById('itemsJsonInput');
+        const selectedItemsEl = document.getElementById('summarySelectedItems');
+        const subtotalEl = document.getElementById('summarySubtotal');
+        const pickupFeeEl = document.getElementById('summaryPickupFee');
+        const totalEl = document.getElementById('summaryTotal');
+
+        function recalculate() {
+            const selectedItems = [];
+            let subtotal = 0;
+            let totalCount = 0;
+
+            itemRows.forEach(row => {
+                const name = row.getAttribute('data-name');
+                const price = parseFloat(row.getAttribute('data-price'));
+                const serviceSelect = row.querySelector('.service-select');
+                const qtyInput = row.querySelector('.qty-input');
+                const subtotalCell = row.querySelector('.row-subtotal');
+
+                const service = serviceSelect.value;
+                const qty = parseInt(qtyInput.value) || 0;
+                const rowTotal = price * qty;
+
+                subtotalCell.textContent = '$' + rowTotal.toFixed(2);
+
+                if (qty > 0) {
+                    selectedItems.push({
+                        name: name,
+                        service: service,
+                        price: price,
+                        qty: qty
+                    });
+                    subtotal += rowTotal;
+                    totalCount += qty;
+                    row.style.backgroundColor = '#f4fbfb';
+                } else {
+                    row.style.backgroundColor = 'transparent';
+                }
+            });
+
+            const pickupFee = subtotal > 0 ? (subtotal >= 30 ? 0.00 : 2.50) : 0.00;
+            const tax = subtotal * 0.08;
+            const grandTotal = subtotal + pickupFee + tax;
+
+            selectedItemsEl.textContent = totalCount + (totalCount === 1 ? ' item' : ' items');
+            subtotalEl.textContent = '$' + subtotal.toFixed(2);
+            pickupFeeEl.textContent = pickupFee === 0 ? 'FREE' : '$' + pickupFee.toFixed(2);
+            totalEl.textContent = '$' + grandTotal.toFixed(2);
+
+            itemsJsonInput.value = JSON.stringify(selectedItems);
+        }
+
+        itemRows.forEach(row => {
+            const qtyInput = row.querySelector('.qty-input');
+            const serviceSelect = row.querySelector('.service-select');
+
+            qtyInput.addEventListener('input', recalculate);
+            qtyInput.addEventListener('change', recalculate);
+            serviceSelect.addEventListener('change', recalculate);
+        });
+    });
+    </script>
 
 </body>
 </html>

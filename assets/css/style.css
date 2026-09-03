@@ -9,6 +9,9 @@ body {
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Navbar */
@@ -18,7 +21,7 @@ body {
     align-items: center;
     background-color: #ffffff;
     padding: 15px 40px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -61,7 +64,8 @@ body {
     transition: color 0.2s ease;
 }
 
-.nav-center a:hover, .nav-center a.active {
+.nav-center a:hover,
+.nav-center a.active {
     color: #2b7a78;
     font-weight: bold;
 }
@@ -242,12 +246,12 @@ body {
     padding: 25px;
     width: 250px;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
 }
 
@@ -294,5 +298,5 @@ body {
     padding: 20px;
     background-color: #17252a;
     color: #fff;
-    margin-top: 40px;
+    margin-top: auto;
 }

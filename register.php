@@ -97,3 +97,38 @@ function test_input($data) {
                     <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #334155; font-size: 14px;">Email Address</label>
                     <input type="email" name="email" value="<?php echo $email; ?>" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;" placeholder="Enter Email Address" required>
                 </div>
+
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #334155; font-size: 14px;">Select Role</label>
+                    <select name="role" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background-color: #ffffff;" required>
+                        <option value="Customer" <?php if ($role == "Customer") echo "selected"; ?>>Customer</option>
+                        <option value="Staff" <?php if ($role == "Staff") echo "selected"; ?>>Staff</option>
+                        <option value="Admin" <?php if ($role == "Admin") echo "selected"; ?>>Admin</option>
+                        <option value="Owner" <?php if ($role == "Owner") echo "selected"; ?>>Owner</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #334155; font-size: 14px;">Password</label>
+                    <input type="password" name="password" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;" placeholder="Enter Password" required>
+                </div>
+
+                <input type="submit" value="Register" class="btn" style="width: 100%; text-align: center; border: none; cursor: pointer; padding: 12px; font-size: 15px;">
+            </form>
+
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #f1f5f9; font-size: 14px; color: #64748b;">
+                Already have an account? <a href="login.php" style="color: #2b7a78; font-weight: bold; text-decoration: none;">Login here</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; <?php echo date("Y"); ?> Smart Laundry. All rights reserved.</p>
+    </footer>
+
+    <!-- JS Script -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
+

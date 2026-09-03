@@ -10,6 +10,7 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 $success_msg = "";
 $error_msg = "";
+$current_view = isset($_GET['view']) ? $_GET['view'] : 'press_order';
 
 // Initialize session orders array if not already set
 if (!isset($_SESSION['orders'])) {
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
         // Store new order at the top of orders list
         array_unshift($_SESSION['orders'], $new_order);
-        $success_msg = "Order <strong>" . $order_code . "</strong> placed successfully! Current State: <span class='badge-status badge-pending'>Pending</span>";
+        $success_msg = "Order <strong>" . $order_code . "</strong> placed successfully! Current State: <span class='badge-status badge-pending'>Pending</span>. <a href='customer_dashboard.php?view=my_orders' style='color: #15803d; font-weight: bold; text-decoration: underline;'>View Order History &rarr;</a>";
     }
 }
 ?>
@@ -84,8 +85,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="customer_dashboard.php" class="active"><i class="fa-solid fa-circle-plus"></i> Press Order</a></li>
-                <li><a href="../logout.php" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                <li>
+                    <a href="../index.php">
+                        <i class="fa-solid fa-house"></i> Home Page
+                    </a>
+                </li>
+                <li>
+                    <a href="customer_dashboard.php?view=press_order" class="<?php echo ($current_view === 'press_order') ? 'active' : ''; ?>">
+                        <i class="fa-solid fa-circle-plus"></i> Press Order
+                    </a>
+                </li>
+                <li>
+                    <a href="customer_dashboard.php?view=my_orders" class="<?php echo ($current_view === 'my_orders') ? 'active' : ''; ?>">
+                        <i class="fa-solid fa-box-archive"></i> My Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout-link">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </li>
             </ul>
 
             <div class="sidebar-user-box">
@@ -120,8 +139,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     </div>
                 <?php endif; ?>
 
-                <!-- PRESS ORDER FORM COMPONENT -->
-                <?php include __DIR__ . "/includes/press_order_form.php"; ?>
+                <!-- DYNAMIC COMPONENT VIEW SWITCHING -->
+                <?php 
+                if ($current_view === 'my_orders') {
+                    include __DIR__ . "/includes/customer_orders_list.php";
+                } else {
+                    include __DIR__ . "/includes/press_order_form.php";
+                }
+                ?>
 
             </div>
 
@@ -137,6 +162,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const itemRows = document.querySelectorAll('.form-item-row');
+        if (itemRows.length === 0) return;
+
         const itemsJsonInput = document.getElementById('itemsJsonInput');
         const selectedItemsEl = document.getElementById('summarySelectedItems');
         const subtotalEl = document.getElementById('summarySubtotal');
@@ -180,21 +207,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             const tax = subtotal * 0.08;
             const grandTotal = subtotal + pickupFee + tax;
 
-            selectedItemsEl.textContent = totalCount + (totalCount === 1 ? ' item' : ' items');
-            subtotalEl.textContent = '$' + subtotal.toFixed(2);
-            pickupFeeEl.textContent = pickupFee === 0 ? 'FREE' : '$' + pickupFee.toFixed(2);
-            totalEl.textContent = '$' + grandTotal.toFixed(2);
+            if (selectedItemsEl) selectedItemsEl.textContent = totalCount + (totalCount === 1 ? ' item' : ' items');
+            if (subtotalEl) subtotalEl.textContent = '$' + subtotal.toFixed(2);
+            if (pickupFeeEl) pickupFeeEl.textContent = pickupFee === 0 ? 'FREE' : '$' + pickupFee.toFixed(2);
+            if (totalEl) totalEl.textContent = '$' + grandTotal.toFixed(2);
 
-            itemsJsonInput.value = JSON.stringify(selectedItems);
+            if (itemsJsonInput) itemsJsonInput.value = JSON.stringify(selectedItems);
         }
 
         itemRows.forEach(row => {
             const qtyInput = row.querySelector('.qty-input');
             const serviceSelect = row.querySelector('.service-select');
 
-            qtyInput.addEventListener('input', recalculate);
-            qtyInput.addEventListener('change', recalculate);
-            serviceSelect.addEventListener('change', recalculate);
+            if (qtyInput) {
+                qtyInput.addEventListener('input', recalculate);
+                qtyInput.addEventListener('change', recalculate);
+            }
+            if (serviceSelect) {
+                serviceSelect.addEventListener('change', recalculate);
+            }
         });
     });
     </script>

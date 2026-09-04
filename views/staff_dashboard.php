@@ -58,3 +58,18 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Staff';
                 </div>
             </div>
         </aside>
+        
+         <!-- Right Content Area -->
+        <main class="dashboard-main">
+            <!-- Title Header Card -->
+            <div class="dashboard-header">
+                <h1>Staff Dashboard</h1>
+                <p>Welcome back, <strong><?php echo htmlspecialchars($username); ?></strong>! Track, wash, press, and update customer order states.</p>
+            </div>
+
+            <!-- Dashboard Content Container -->
+            <div class="dashboard-content">
+                
+                <?php include __DIR__ . "/includes/staff_orders_list.php"; ?>
+
+            </div>

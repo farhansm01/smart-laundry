@@ -20,7 +20,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Owner';
 <body>
     <div class="dashboard-wrapper">
 
-    <!-- Left Sidebar Navigation -->
+    <!-- Owner Dashboard Sidebar Navigation -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <h2>

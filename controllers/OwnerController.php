@@ -20,7 +20,8 @@ $orders = getAllOrders($conn);
     $completedCount = 0; // Initialize completed order count
 
     foreach ($orders as $ord) {
-        $totalRevenue += floatval($ord['total_price']);
+       // Calculate revenue and order status statistics
+foreach ($orders as $ord) {
         $status = strtolower($ord['status']);
 
         if (strpos($status, 'pending') !== false) {

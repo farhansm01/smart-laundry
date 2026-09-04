@@ -54,4 +54,13 @@ $staff_orders = fetchStaffOrders($username);
                     </tr>
                 </thead>
                 <tbody>
-            
+            <?php foreach ($staff_orders as $ord): 
+                        $status_raw = strtolower(str_replace(' ', '', $ord['status']));
+                        $badge_class = 'badge-pending';
+                        if (strpos($status_raw, 'accepted') !== false) $badge_class = 'badge-accepted';
+                        elseif (strpos($status_raw, 'outforpickup') !== false) $badge_class = 'badge-outforpickup';
+                        elseif (strpos($status_raw, 'laundry') !== false || strpos($status_raw, 'processing') !== false) $badge_class = 'badge-processing';
+                        elseif (strpos($status_raw, 'completed') !== false || strpos($status_raw, 'delivered') !== false) $badge_class = 'badge-completed';
+                        elseif (strpos($status_raw, 'cancelled') !== false) $badge_class = 'badge-cancelled';
+                        elseif (strpos($status_raw, 'assigned') !== false) $badge_class = 'badge-assigned';
+                    ?>

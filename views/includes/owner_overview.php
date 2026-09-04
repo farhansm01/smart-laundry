@@ -58,7 +58,7 @@ $services = fetchServices();
         <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
             <div style="font-size: 28px; color: #16a34a; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i></div>
             <div style="font-size: 24px; font-weight: bold; color: #1e293b;"><?php echo $data['completed_count']; ?></div>
-            <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Completed / Delivered</div>
+            <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Completed Orders</div>
         </div>
     </div>
 

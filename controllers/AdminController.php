@@ -27,6 +27,20 @@ function handleAdminOrderAction($postData) {
        return ['status' => false, 'message' => 'Invalid order action request.'];
    }
 
+    if ($action === 'accept') {
+        $updated = updateOrderStatus($conn, $orderId, 'Accepted');
+       if ($updated) return ['status' => true, 'message' => "Order #ORD-{$orderId} status updated to 'Accepted'!"];
+    } elseif ($action === 'reject') {
+       $updated = updateOrderStatus($conn, $orderId, 'Cancelled');
+        if ($updated) return ['status' => true, 'message' => "Order #ORD-{$orderId} status updated to 'Cancelled'!"];
+   } elseif ($action === 'assign') {
+       if (empty($staffName)) {
+            return ['status' => false, 'message' => 'Please select a registered staff member to assign.'];
+       }
+        $updated = assignOrderToStaff($conn, $orderId, $staffName);
+        if ($updated) return ['status' => true, 'message' => "Order #ORD-{$orderId} assigned to Staff '{$staffName}'!"];
+    }
+
    return ['status' => false, 'message' => 'Failed to update order status. Please try again.'];
 }
 ?>

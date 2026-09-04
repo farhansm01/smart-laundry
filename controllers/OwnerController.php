@@ -17,7 +17,7 @@ function fetchOwnerOverview()
 $orders = getAllOrders($conn);
     $totalOrders = count($orders); // Calculate total number of orders
    $totalRevenue = 0; // Initialize total revenue
-    $completedCount = 0;
+    $completedCount = 0; // Initialize completed order count
 
     foreach ($orders as $ord) {
         $totalRevenue += floatval($ord['total_price']);

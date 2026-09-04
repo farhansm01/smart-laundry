@@ -53,3 +53,31 @@
             </div>
         </div>
     </section>
+    <!-- About Content Section -->
+    <section class="services">
+        <h2>Our Mission & Values</h2>
+        <div class="service-cards" style="gap: 30px;">
+            <div class="card" style="width: 320px; text-align: left;">
+                <h3>🎯 Our Mission</h3>
+                <p>To provide effortless, high-quality laundry care right to your doorstep so you can spend your valuable time on what matters most.</p>
+            </div>
+            <div class="card" style="width: 320px; text-align: left;">
+                <h3>✨ Quality Washing</h3>
+                <p>We use premium fabric softeners and temperature-controlled cycles to keep your clothes looking crisp and feeling fresh.</p>
+            </div>
+            <div class="card" style="width: 320px; text-align: left;">
+                <h3>🚗 Convenience First</h3>
+                <p>Easy online booking, doorstep pickup, fast turnaround, and convenient payment upon delivery.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; <?php echo date("Y"); ?> Smart Laundry. All rights reserved.</p>
+    </footer>
+
+    <!-- JS Script -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

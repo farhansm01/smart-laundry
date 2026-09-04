@@ -64,3 +64,9 @@ $staff_orders = fetchStaffOrders($username);
                         elseif (strpos($status_raw, 'cancelled') !== false) $badge_class = 'badge-cancelled';
                         elseif (strpos($status_raw, 'assigned') !== false) $badge_class = 'badge-assigned';
                     ?>
+                    <tr>
+                            <td><strong style="color: #2b7a78;">#ORD-<?php echo htmlspecialchars($ord['id']); ?></strong></td>
+                            <td>
+                                <strong><?php echo htmlspecialchars($ord['customer_name']); ?></strong>
+                                <div style="font-size: 12px; color: #64748b;">📞 <?php echo htmlspecialchars($ord['customer_phone']); ?></div>
+                            </td>

@@ -41,3 +41,17 @@ $staff_orders = fetchStaffOrders($username);
                 <p style="font-size: 16px; font-weight: bold; margin-bottom: 6px;">No assigned orders yet!</p>
                 <p style="font-size: 14px; color: #94a3b8;">When Admin assigns an order to <strong><?php echo htmlspecialchars($username); ?></strong>, it will appear here.</p>
             </div>
+             <?php else: ?>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Info</th>
+                        <th>Clothes & Services</th>
+                        <th>Pickup & Address</th>
+                        <th>Current State</th>
+                        <th style="width: 220px; text-align: center;">Update Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+            

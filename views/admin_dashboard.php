@@ -57,3 +57,28 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Admin';
                 </div>
             </div>
         </aside>
+        <!-- Right Content Area -->
+        <main class="dashboard-main">
+            <!-- Title Header Card -->
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <p>Welcome back, <strong><?php echo htmlspecialchars($username); ?></strong>! Manage system orders, approvals, and staff assignments.</p>
+            </div>
+
+            <!-- Dashboard Content Container -->
+            <div class="dashboard-content">
+                
+                <?php include __DIR__ . "/includes/admin_orders_list.php"; ?>
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>&copy; <?php echo date("Y"); ?> Smart Laundry. All rights reserved.</p>
+            </footer>
+        </main>
+
+    </div>
+
+</body>
+</html>

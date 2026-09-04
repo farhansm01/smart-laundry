@@ -89,7 +89,7 @@ $staff_members = fetchStaffMembers();
                                         <input type="hidden" name="admin_action" value="1">
                                         <input type="hidden" name="order_id" value="<?php echo $ord['id']; ?>">
                                         <input type="hidden" name="action" value="accept">
-                                        <button type="submit" class="btn-sm" style="background-color: #16a34a; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;">
+                                        <button type="submit" title="Click to accept this order" class="btn-sm" style="background-color: #16a34a; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;">
                                             <i class="fa-solid fa-check"></i> Accept
                                         </button>
                                     </form>
@@ -98,7 +98,7 @@ $staff_members = fetchStaffMembers();
                                         <input type="hidden" name="admin_action" value="1">
                                         <input type="hidden" name="order_id" value="<?php echo $ord['id']; ?>">
                                         <input type="hidden" name="action" value="reject">
-                                        <button type="submit" class="btn-sm" style="background-color: #dc2626; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;">
+                                        <button type="submit" title="Click to reject this order" class="btn-sm" style="background-color: #dc2626; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;">
                                             <i class="fa-solid fa-xmark"></i> Reject
                                         </button>
                                     </form>

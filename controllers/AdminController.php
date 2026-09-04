@@ -15,3 +15,18 @@ function fetchStaffMembers() {
    global $conn;
     return getRegisteredStaffUsers($conn);
 }
+// Process admin action (Accept, Reject/Cancel, or Assign to Staff)
+function handleAdminOrderAction($postData) {
+   global $conn;
+
+    $orderId = isset($postData['order_id']) ? intval($postData['order_id']) : 0;
+  $action = isset($postData['action']) ? trim($postData['action']) : '';
+    $staffName = isset($postData['staff_name']) ? trim($postData['staff_name']) : '';
+
+   if ($orderId <= 0 || empty($action)) {
+       return ['status' => false, 'message' => 'Invalid order action request.'];
+   }
+
+   return ['status' => false, 'message' => 'Failed to update order status. Please try again.'];
+}
+?>

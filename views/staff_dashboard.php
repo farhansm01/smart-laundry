@@ -21,3 +21,31 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Staff';
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+    
+ <!-- Main Dashboard Flex Layout -->
+    <div class="dashboard-wrapper">
+        
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fa-solid fa-soap"></i> Smart Laundry</h2>
+                <small>Staff Portal</small>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.php">
+                        <i class="fa-solid fa-house"></i> Home Page
+                    </a>
+                </li>
+                <li>
+                    <a href="staff_dashboard.php" class="active">
+                        <i class="fa-solid fa-boxes-packing"></i> Process Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout-link">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </li>
+            </ul>

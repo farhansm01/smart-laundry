@@ -16,7 +16,7 @@ function fetchOwnerOverview()
     // Fetch all orders for owner dashboard statistics
 $orders = getAllOrders($conn);
     $totalOrders = count($orders); // Calculate total number of orders
-    $pendingCount = 0;
+   $totalRevenue = 0; // Initialize total revenue
     $completedCount = 0;
 
     foreach ($orders as $ord) {

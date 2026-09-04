@@ -33,3 +33,11 @@ $staff_orders = fetchStaffOrders($username);
             <i class="fa-solid fa-triangle-exclamation"></i> <?php echo $error_msg; ?>
         </div>
     <?php endif; ?>
+
+    <div class="orders-card">
+        <?php if (empty($staff_orders)): ?>
+            <div style="text-align: center; padding: 40px; color: #64748b;">
+                <i class="fa-solid fa-box-open" style="font-size: 40px; margin-bottom: 12px; color: #cbd5e1; display: block;"></i>
+                <p style="font-size: 16px; font-weight: bold; margin-bottom: 6px;">No assigned orders yet!</p>
+                <p style="font-size: 14px; color: #94a3b8;">When Admin assigns an order to <strong><?php echo htmlspecialchars($username); ?></strong>, it will appear here.</p>
+            </div>

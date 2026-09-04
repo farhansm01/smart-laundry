@@ -24,4 +24,36 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Admin';
 
     <!-- Main Dashboard Flex Layout -->
     <div class="dashboard-wrapper">
-        
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fa-solid fa-soap"></i> Smart Laundry</h2>
+                <small>Admin Portal</small>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.php">
+                        <i class="fa-solid fa-house"></i> Home Page
+                    </a>
+                </li>
+                <li>
+                    <a href="admin_dashboard.php" class="active">
+                        <i class="fa-solid fa-list-check"></i> Manage All Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="../logout.php" class="logout-link">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-user-box">
+                <span class="user-icon"><i class="fa-solid fa-user-shield"></i></span>
+                <div>
+                    <strong><?php echo htmlspecialchars($username); ?></strong>
+                    <small style="display: block; color: #94a3b8;">Administrator</small>
+                </div>
+            </div>
+        </aside>

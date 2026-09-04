@@ -48,7 +48,7 @@ $staff_members = fetchStaffMembers();
                         <th>Customer Info</th>
                         <th>Items & Services</th>
                         <th>Pickup & Address</th>
-                        <th>Total</th>
+                        <th>Total Price</th>
                         <th>Status</th>
                         <th style="width: 250px; text-align: center;">Admin Actions</th>
                     </tr>

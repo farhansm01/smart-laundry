@@ -82,3 +82,53 @@ $staff_members = fetchStaffMembers();
                                     <?php echo htmlspecialchars($ord['status']); ?>
                                 </span>
                             </td>
+                            <td style="text-align: center;">
+                                <!-- Accept / Reject buttons -->
+                                <div style="display: flex; gap: 6px; justify-content: center; margin-bottom: 8px;">
+                                    <form method="POST" action="" style="display: inline;">
+                                        <input type="hidden" name="admin_action" value="1">
+                                        <input type="hidden" name="order_id" value="<?php echo $ord['id']; ?>">
+                                        <input type="hidden" name="action" value="accept">
+                                        <button type="submit" class="btn-sm" style="background-color: #16a34a; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;">
+                                            <i class="fa-solid fa-check"></i> Accept
+                                        </button>
+                                    </form>
+
+                                    <form method="POST" action="" style="display: inline;">
+                                        <input type="hidden" name="admin_action" value="1">
+                                        <input type="hidden" name="order_id" value="<?php echo $ord['id']; ?>">
+                                        <input type="hidden" name="action" value="reject">
+                                        <button type="submit" class="btn-sm" style="background-color: #dc2626; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;">
+                                            <i class="fa-solid fa-xmark"></i> Reject
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Assign to Staff Form (Dynamic from database) -->
+                                <form method="POST" action="" style="display: flex; gap: 4px;">
+                                    <input type="hidden" name="admin_action" value="1">
+                                    <input type="hidden" name="order_id" value="<?php echo $ord['id']; ?>">
+                                    <input type="hidden" name="action" value="assign">
+                                    <select name="staff_name" style="padding: 4px; font-size: 11px; border: 1px solid #cbd5e1; border-radius: 4px; flex: 1;">
+                                        <?php if (empty($staff_members)): ?>
+                                            <option value="">No Staff Registered</option>
+                                        <?php else: ?>
+                                            <?php foreach ($staff_members as $st_user): ?>
+                                                <option value="<?php echo htmlspecialchars($st_user); ?>">
+                                                    Staff: <?php echo htmlspecialchars($st_user); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                    <button type="submit" class="btn-sm" style="background-color: #0284c7; color: #fff; padding: 4px 8px; font-size: 11px; border: none; cursor: pointer; border-radius: 4px;" <?php if (empty($staff_members)) echo 'disabled'; ?>>
+                                        Assign
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
+</section>

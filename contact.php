@@ -80,3 +80,48 @@
                 <p style="color: #555;">Monday – Sunday: 8:00 AM – 9:00 PM</p>
             </div>
         </div>
+        <!-- Contact Form -->
+        <div style="background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+            <h3 style="color: #17252a; margin-bottom: 20px;">Send Us a Message</h3>
+
+            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+                <div style="background-color: #dcfce7; border: 1px solid #86efac; color: #166534; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center;">
+                    Thank you! Your message has been sent successfully. We will reply shortly.
+                </div>
+            <?php endif; ?>
+
+            <form action="contact.php" method="POST">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Your Name</label>
+                    <input type="text" name="name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;" placeholder="John Doe" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Your Email</label>
+                    <input type="email" name="email" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;" placeholder="john@example.com" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Subject</label>
+                    <input type="text" name="subject" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;" placeholder="Pickup Query" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Message</label>
+                    <textarea name="message" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;" placeholder="How can we help you?" required></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; text-align: center; border: none; cursor: pointer;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; <?php echo date("Y"); ?> Smart Laundry. All rights reserved.</p>
+    </footer>
+
+    <!-- JS Script -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

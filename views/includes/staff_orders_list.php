@@ -75,3 +75,7 @@ $staff_orders = fetchStaffOrders($username);
                                     <?php echo htmlspecialchars($ord['items_summary']); ?>
                                 </span>
                             </td>
+                            <td>
+                                <div>📅 <?php echo htmlspecialchars($ord['pickup_date']); ?> (<?php echo htmlspecialchars($ord['pickup_slot']); ?>)</div>
+                                <small style="color: #475569;"><i class="fa-solid fa-location-dot"></i> <?php echo htmlspecialchars($ord['delivery_address']); ?></small>
+                            </td>

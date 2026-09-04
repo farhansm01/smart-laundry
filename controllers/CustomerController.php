@@ -1,6 +1,6 @@
 <?php
 // controllers/CustomerController.php
-// Handles customer operations like placing a new laundry order
+// Handles customer operations like placing orders and viewing order history
 
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../models/OrderModel.php';
@@ -46,5 +46,11 @@ function placeCustomerOrder($username, $postData) {
     } else {
         return ['status' => false, 'message' => 'Error saving order to database. Please try again.'];
     }
+}
+
+// Fetch all orders placed by the current customer
+function fetchCustomerOrders($username) {
+    global $conn;
+    return getCustomerOrders($conn, $username);
 }
 ?>

@@ -15,4 +15,24 @@ function saveOrder($conn, $customerName, $customerPhone, $itemsSummary, $pickupD
     }
     return false;
 }
+
+// Fetch all orders for a specific customer from database
+function getCustomerOrders($conn, $customerName) {
+    $sql = "SELECT * FROM orders WHERE customer_name = ? ORDER BY id DESC";
+    $stmt = $conn->prepare($sql);
+    $orders = [];
+
+    if ($stmt) {
+        $stmt->bind_param("s", $customerName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+        $stmt->close();
+    }
+
+    return $orders;
+}
 ?>

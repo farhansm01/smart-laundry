@@ -12,53 +12,15 @@ $success_msg = "";
 $error_msg = "";
 $current_view = isset($_GET['view']) ? $_GET['view'] : 'press_order';
 
-// Initialize session orders array if not already set
-if (!isset($_SESSION['orders'])) {
-    $_SESSION['orders'] = [];
-}
-
-// Handle Form POST Submission (Merging items into ONE order)
+// Handle Form POST Submission using Controller
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
-    $phone = trim($_POST['phone'] ?? '');
-    $address = trim($_POST['address'] ?? '');
-    $pickup_date = trim($_POST['pickup_date'] ?? '');
-    $time_slot = trim($_POST['time_slot'] ?? '');
-    $items_json = $_POST['items_json'] ?? '[]';
-    $items = json_decode($items_json, true);
+    require_once __DIR__ . '/../controllers/CustomerController.php';
+    $result = placeCustomerOrder($username, $_POST);
 
-    if (empty($phone) || empty($address) || empty($pickup_date) || empty($time_slot)) {
-        $error_msg = "Please fill in all address, phone, and pickup schedule details.";
-    } elseif (empty($items) || count($items) === 0) {
-        $error_msg = "Please enter quantity for at least one clothes item.";
+    if ($result['status']) {
+        $success_msg = "Order placed successfully! Status: <span class='badge-status badge-pending'>Pending</span>. <a href='customer_dashboard.php?view=my_orders' style='color: #15803d; font-weight: bold; text-decoration: underline;'>View Order History &rarr;</a>";
     } else {
-        $order_code = "ORD-" . rand(1000, 9999);
-        $subtotal = 0;
-        foreach ($items as $it) {
-            $subtotal += ($it['price'] * $it['qty']);
-        }
-        $pickup_fee = $subtotal >= 30 ? 0.00 : 2.50;
-        $tax = $subtotal * 0.08;
-        $total_amount = $subtotal + $pickup_fee + $tax;
-
-        $new_order = [
-            'id' => $order_code,
-            'customer_name' => $username,
-            'phone' => $phone,
-            'address' => $address,
-            'pickup_date' => $pickup_date,
-            'time_slot' => $time_slot,
-            'items' => $items,
-            'subtotal' => $subtotal,
-            'pickup_fee' => $pickup_fee,
-            'tax' => $tax,
-            'total_amount' => $total_amount,
-            'status' => 'Pending', // Initial State upon placing order
-            'created_at' => date('Y-m-d H:i:s')
-        ];
-
-        // Store new order at the top of orders list
-        array_unshift($_SESSION['orders'], $new_order);
-        $success_msg = "Order <strong>" . $order_code . "</strong> placed successfully! Current State: <span class='badge-status badge-pending'>Pending</span>. <a href='customer_dashboard.php?view=my_orders' style='color: #15803d; font-weight: bold; text-decoration: underline;'>View Order History &rarr;</a>";
+        $error_msg = $result['message'];
     }
 }
 ?>

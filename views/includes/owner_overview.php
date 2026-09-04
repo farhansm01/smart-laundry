@@ -52,7 +52,7 @@ $services = fetchServices();
         <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
             <div style="font-size: 28px; color: #d97706; margin-bottom: 6px;"><i class="fa-solid fa-clock-rotate-left"></i></div>
             <div style="font-size: 24px; font-weight: bold; color: #1e293b;"><?php echo $data['pending_count']; ?></div>
-            <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Pending Orders</div>
+            <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Orders Pending</div>
         </div>
 
         <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">

@@ -21,3 +21,13 @@ function handleStaffStatusUpdate($postData) {
     if ($orderId <= 0 || empty($newStatus)) {
         return ['status' => false, 'message' => 'Invalid status update request.'];
     }
+
+      $updated = updateOrderStatus($conn, $orderId, $newStatus);
+
+       if ($updated) {
+        return ['status' => true, 'message' => "Order #ORD-{$orderId} status updated to '{$newStatus}'!"];
+    } else {
+        return ['status' => false, 'message' => 'Failed to update order status.'];
+    }
+}
+?>

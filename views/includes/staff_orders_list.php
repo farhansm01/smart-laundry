@@ -84,3 +84,26 @@ $staff_orders = fetchStaffOrders($username);
                                     <?php echo htmlspecialchars($ord['status']); ?>
                                 </span>
                             </td>
+                             <td style="text-align: center;">
+                                <form method="POST" action="" style="display: flex; gap: 4px; justify-content: center;">
+                                    <input type="hidden" name="update_staff_status" value="1">
+                                    <input type="hidden" name="order_id" value="<?php echo $ord['id']; ?>">
+                                    <select name="new_status" style="padding: 5px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 4px; flex: 1;">
+                                        <option value="Out for Pickup" <?php if ($ord['status'] === 'Out for Pickup') echo 'selected'; ?>>Out for Pickup</option>
+                                        <option value="In Laundry" <?php if ($ord['status'] === 'In Laundry') echo 'selected'; ?>>In Laundry</option>
+                                        <option value="Processing" <?php if ($ord['status'] === 'Processing') echo 'selected'; ?>>Processing</option>
+                                        <option value="Completed" <?php if ($ord['status'] === 'Completed') echo 'selected'; ?>>Completed</option>
+                                        <option value="Delivered" <?php if ($ord['status'] === 'Delivered') echo 'selected'; ?>>Delivered</option>
+                                    </select>
+                                    <button type="submit" class="btn-sm" style="background-color: #2b7a78; color: #fff; padding: 5px 10px; font-size: 12px; border: none; cursor: pointer; border-radius: 4px;">
+                                        Update
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
+</section>

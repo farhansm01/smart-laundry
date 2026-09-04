@@ -62,7 +62,7 @@ $services = fetchServices();
         </div>
     </div>
 
-    <!-- OWNER FEATURE: MANAGE SERVICES & PRICING -->
+   <!-- OWNER FEATURE: MANAGE LAUNDRY SERVICES -->
     <div class="orders-card" style="margin-bottom: 30px;">
         <h3 style="font-size: 16px; margin-bottom: 15px; color: #1e293b;"><i class="fa-solid fa-tags"></i> Manage Laundry Services & Unit Pricing</h3>
         

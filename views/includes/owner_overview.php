@@ -20,7 +20,7 @@ $services = fetchServices();
 <section id="owner-overview" class="dashboard-section">
     <div class="section-title-box">
         <h2><i class="fa-solid fa-chart-line"></i> Business Performance & Service Pricing</h2>
-        <p>Real-time analytics, revenue stats, and laundry service price management.</p>
+        <p>Monitor revenue, orders, and laundry service pricing in real time.</p>
     </div>
 
     <?php if (!empty($success_msg)): ?>

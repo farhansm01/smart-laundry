@@ -58,7 +58,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Staff';
                 </div>
             </div>
         </aside>
-        
+
          <!-- Right Content Area -->
         <main class="dashboard-main">
             <!-- Title Header Card -->
@@ -73,3 +73,14 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Staff';
                 <?php include __DIR__ . "/includes/staff_orders_list.php"; ?>
 
             </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>&copy; <?php echo date("Y"); ?> Smart Laundry. All rights reserved.</p>
+            </footer>
+        </main>
+
+    </div>
+
+</body>
+</html>

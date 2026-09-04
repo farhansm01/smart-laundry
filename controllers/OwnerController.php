@@ -24,7 +24,8 @@ $orders = getAllOrders($conn);
 foreach ($orders as $ord) {
         $status = strtolower($ord['status']);
 
-        if (strpos($status, 'pending') !== false) {
+       // Check the current order status
+$status = strtolower($ord['status']);
             $pendingCount++;
         } elseif (
             strpos($status, 'completed') !== false ||

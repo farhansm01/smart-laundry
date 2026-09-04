@@ -70,3 +70,8 @@ $staff_orders = fetchStaffOrders($username);
                                 <strong><?php echo htmlspecialchars($ord['customer_name']); ?></strong>
                                 <div style="font-size: 12px; color: #64748b;">📞 <?php echo htmlspecialchars($ord['customer_phone']); ?></div>
                             </td>
+                            <td>
+                                <span class="item-tag" style="display: block; font-size: 13px;">
+                                    <?php echo htmlspecialchars($ord['items_summary']); ?>
+                                </span>
+                            </td>

@@ -21,7 +21,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Staff';
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    
+
  <!-- Main Dashboard Flex Layout -->
     <div class="dashboard-wrapper">
         
@@ -49,3 +49,12 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'Staff';
                     </a>
                 </li>
             </ul>
+
+            <div class="sidebar-user-box">
+                <span class="user-icon"><i class="fa-solid fa-user-gear"></i></span>
+                <div>
+                    <strong><?php echo htmlspecialchars($username); ?></strong>
+                    <small style="display: block; color: #94a3b8;">Staff Member</small>
+                </div>
+            </div>
+        </aside>

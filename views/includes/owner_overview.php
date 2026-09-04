@@ -40,7 +40,7 @@ $services = fetchServices();
         <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
             <div style="font-size: 28px; color: #2b7a78; margin-bottom: 6px;"><i class="fa-solid fa-dollar-sign"></i></div>
             <div style="font-size: 24px; font-weight: bold; color: #1e293b;">$<?php echo number_format($data['total_revenue'], 2); ?></div>
-            <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Total Revenue</div>
+            <div style="font-size: 13px; color: #64748b; margin-top: 4px;">Total Business Revenue</div>
         </div>
 
         <div style="background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">

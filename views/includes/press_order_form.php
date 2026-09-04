@@ -1,4 +1,9 @@
 <!-- SECTION 1: PRESS LAUNDRY ORDER FORM COMPONENT -->
+<?php
+require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../models/ServiceModel.php';
+$form_services = getAllServices($conn);
+?>
 <section id="press-order" class="dashboard-section">
     <div class="section-title-box">
         <h2><i class="fa-solid fa-pen-to-square"></i> Press Laundry Order Form</h2>
@@ -25,121 +30,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Row 1 -->
-                        <tr class="form-item-row" data-name="Shirt / T-Shirt" data-price="3.50">
-                            <td>
-                                <i class="fa-solid fa-shirt" style="color: #2b7a78; margin-right: 8px;"></i>
-                                <strong>Shirt / T-Shirt</strong>
-                            </td>
-                            <td>
-                                <select class="service-select">
-                                    <option value="Wash & Iron">Wash & Iron</option>
-                                    <option value="Wash & Fold">Wash & Fold</option>
-                                    <option value="Dry Cleaning">Dry Cleaning</option>
-                                </select>
-                            </td>
-                            <td><span class="price-pill">$3.50</span></td>
-                            <td>
-                                <input type="number" class="qty-input" min="0" value="0" placeholder="0">
-                            </td>
-                            <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
-                        </tr>
-
-                        <!-- Row 2 -->
-                        <tr class="form-item-row" data-name="Trousers / Jeans" data-price="4.50">
-                            <td>
-                                <i class="fa-solid fa-socks" style="color: #2b7a78; margin-right: 8px;"></i>
-                                <strong>Trousers / Jeans</strong>
-                            </td>
-                            <td>
-                                <select class="service-select">
-                                    <option value="Wash & Fold">Wash & Fold</option>
-                                    <option value="Wash & Iron">Wash & Iron</option>
-                                    <option value="Steam Clean">Steam Clean</option>
-                                </select>
-                            </td>
-                            <td><span class="price-pill">$4.50</span></td>
-                            <td>
-                                <input type="number" class="qty-input" min="0" value="0" placeholder="0">
-                            </td>
-                            <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
-                        </tr>
-
-                        <!-- Row 3 -->
-                        <tr class="form-item-row" data-name="Dress / Skirt" data-price="7.00">
-                            <td>
-                                <i class="fa-solid fa-person-dress" style="color: #2b7a78; margin-right: 8px;"></i>
-                                <strong>Dress / Skirt</strong>
-                            </td>
-                            <td>
-                                <select class="service-select">
-                                    <option value="Dry Cleaning">Dry Cleaning</option>
-                                    <option value="Delicate Wash">Delicate Wash</option>
-                                    <option value="Steam Press">Steam Press</option>
-                                </select>
-                            </td>
-                            <td><span class="price-pill">$7.00</span></td>
-                            <td>
-                                <input type="number" class="qty-input" min="0" value="0" placeholder="0">
-                            </td>
-                            <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
-                        </tr>
-
-                        <!-- Row 4 -->
-                        <tr class="form-item-row" data-name="Suit / Blazer" data-price="12.00">
-                            <td>
-                                <i class="fa-solid fa-user-tie" style="color: #2b7a78; margin-right: 8px;"></i>
-                                <strong>Suit / Blazer</strong>
-                            </td>
-                            <td>
-                                <select class="service-select">
-                                    <option value="Steam Clean">Steam Clean</option>
-                                    <option value="Dry Cleaning">Dry Cleaning</option>
-                                </select>
-                            </td>
-                            <td><span class="price-pill">$12.00</span></td>
-                            <td>
-                                <input type="number" class="qty-input" min="0" value="0" placeholder="0">
-                            </td>
-                            <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
-                        </tr>
-
-                        <!-- Row 5 -->
-                        <tr class="form-item-row" data-name="Bed Sheet" data-price="6.50">
-                            <td>
-                                <i class="fa-solid fa-bed" style="color: #2b7a78; margin-right: 8px;"></i>
-                                <strong>Bed Sheet / Linen</strong>
-                            </td>
-                            <td>
-                                <select class="service-select">
-                                    <option value="Deep Clean">Deep Clean</option>
-                                    <option value="Wash & Fold">Wash & Fold</option>
-                                </select>
-                            </td>
-                            <td><span class="price-pill">$6.50</span></td>
-                            <td>
-                                <input type="number" class="qty-input" min="0" value="0" placeholder="0">
-                            </td>
-                            <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
-                        </tr>
-
-                        <!-- Row 6 -->
-                        <tr class="form-item-row" data-name="Heavy Comforter" data-price="14.00">
-                            <td>
-                                <i class="fa-solid fa-box" style="color: #2b7a78; margin-right: 8px;"></i>
-                                <strong>Heavy Comforter</strong>
-                            </td>
-                            <td>
-                                <select class="service-select">
-                                    <option value="Heavy Duty Wash">Heavy Duty Wash</option>
-                                </select>
-                            </td>
-                            <td><span class="price-pill">$14.00</span></td>
-                            <td>
-                                <input type="number" class="qty-input" min="0" value="0" placeholder="0">
-                            </td>
-                            <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
-                        </tr>
+                        <?php foreach ($form_services as $srv): ?>
+                            <tr class="form-item-row" data-name="<?php echo htmlspecialchars($srv['item_name']); ?>" data-price="<?php echo $srv['price']; ?>">
+                                <td>
+                                    <i class="fa-solid <?php echo htmlspecialchars($srv['icon'] ?? 'fa-shirt'); ?>" style="color: #2b7a78; margin-right: 8px;"></i>
+                                    <strong><?php echo htmlspecialchars($srv['item_name']); ?></strong>
+                                </td>
+                                <td>
+                                    <select class="service-select">
+                                        <option value="<?php echo htmlspecialchars($srv['service_type']); ?>"><?php echo htmlspecialchars($srv['service_type']); ?></option>
+                                        <option value="Wash & Iron">Wash & Iron</option>
+                                        <option value="Wash & Fold">Wash & Fold</option>
+                                        <option value="Dry Cleaning">Dry Cleaning</option>
+                                    </select>
+                                </td>
+                                <td><span class="price-pill">$<?php echo number_format($srv['price'], 2); ?></span></td>
+                                <td>
+                                    <input type="number" class="qty-input" min="0" value="0" placeholder="0">
+                                </td>
+                                <td style="text-align: right;"><strong class="row-subtotal">$0.00</strong></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

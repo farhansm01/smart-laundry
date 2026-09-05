@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format";
     } else {
-        $sql = "INSERT INTO registration(username,password,email,role) VALUES ('$username','$password','$email','$role')";
+        $sql = "INSERT INTO registration (username,password,email,role) VALUES ('$username','$password','$email','$role')";
 
         if ($conn->query($sql) === TRUE) {
             $success = "Registration Done as " . $role . "! You can now login.";
@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -72,7 +71,6 @@ function test_input($data) {
             <a href="register.php" class="btn-sm">Register</a>
         </div>
     </header>
-
     <!-- Register Container -->
     <section style="max-width: 480px; margin: 50px auto; padding: 0 20px;">
         <div style="background: #ffffff; padding: 35px 30px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; text-align: center;">
@@ -131,4 +129,9 @@ function test_input($data) {
     <script src="assets/js/script.js"></script>
 </body>
 </html>
+
+
+
+
+
 

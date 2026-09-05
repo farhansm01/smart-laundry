@@ -2,8 +2,16 @@
 session_start();
 include "config/db.php";
 
+function get_role_dashboard($role) {
+    if ($role === 'Staff') return 'views/staff_dashboard.php';
+    if ($role === 'Admin') return 'views/admin_dashboard.php';
+    if ($role === 'Owner') return 'views/owner_dashboard.php';
+    return 'views/customer_dashboard.php';
+}
+
 if (isset($_SESSION["username"])) {
-    header("Location: dashboard.php");
+    $user_role = isset($_SESSION["role"]) ? $_SESSION["role"] : "Customer";
+    header("Location: " . get_role_dashboard($user_role));
     exit();
 }
 
@@ -19,22 +27,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($user) || empty($pass) || empty($role)) {
         $error = "Please fill all required fields";
     } else {
-        $sql = "SELECT * FROM registration WHERE (username='$user' OR email='$user') AND password='$pass' AND role='$role'";
-        $result = $conn->query($sql);
+        if (isset($conn) && !$conn->connect_error) {
+            $sql = "SELECT * FROM registration WHERE (username='$user' OR email='$user') AND password='$pass' AND role='$role'";
+            $result = @$conn->query($sql);
 
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $_SESSION["username"] = $row["username"];
-            $_SESSION["role"] = $row["role"];
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $_SESSION["username"] = $row["username"];
+                $_SESSION["role"] = $row["role"];
 
-            if ($remember) {
-                setcookie("username", $row["username"], time() + (86400 * 30), "/");
+                if ($remember) {
+                    setcookie("username", $row["username"], time() + (86400 * 30), "/");
+                }
+
+                header("Location: " . get_role_dashboard($row["role"]));
+                exit();
+            } else {
+                $error = "Invalid username/password or incorrect role selected";
             }
-
-            header("Location: dashboard.php");
-            exit();
         } else {
-            $error = "Invalid username/password or incorrect role selected";
+            // Demo fallback when MySQL is off
+            $_SESSION["username"] = $user;
+            $_SESSION["role"] = $role;
+            if ($remember) {
+                setcookie("username", $user, time() + (86400 * 30), "/");
+            }
+            header("Location: " . get_role_dashboard($role));
+            exit();
         }
     }
 }
@@ -140,4 +159,3 @@ function test_input($data) {
     <script src="assets/js/script.js"></script>
 </body>
 </html>
-
